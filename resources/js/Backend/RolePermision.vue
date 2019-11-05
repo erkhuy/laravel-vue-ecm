@@ -298,6 +298,7 @@ export default {
     newPermission() {
       $("#PermissionModal").modal("show");
       this.actionPermission = "create";
+      this.permision.reset();
     },
     editPermision(per) {
       $("#PermissionModal").modal("show");

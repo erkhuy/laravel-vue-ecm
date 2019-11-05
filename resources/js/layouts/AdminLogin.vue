@@ -82,18 +82,20 @@ export default {
     return {
       user: new Form({
         email: null,
-        password: null,
-        remember: null
+        password: null
       })
     };
   },
   methods: {
     AdmLogin() {
-      this.$store.dispath("retrieveToken", {
-        email: this.user.email,
-        password: this.user.password,
-        remember: this.user.remember
-      });
+      this.$store
+        .dispatch("retrieveToken", {
+          email: this.user.email,
+          password: this.user.password
+        })
+        .then(res => {
+          this.$router.push("/admin");
+        });
     }
   }
 };

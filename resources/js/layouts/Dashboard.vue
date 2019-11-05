@@ -4,7 +4,6 @@
     <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
       <!-- Left navbar links -->
       <!-- SEARCH FORM -->
-
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link btn-navbar" data-widget="pushmenu" href="#">
@@ -148,7 +147,7 @@
     <div id="app">
       <aside class="main-sidebar sidebar-dark-primary elevation-4">
         <!-- Brand Logo -->
-        <a href="index3.html" class="brand-link">
+        <a href class="brand-link">
           <img
             src
             alt="AdminLTE Logo"
@@ -163,9 +162,13 @@
           <!-- Sidebar user panel (optional) -->
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-              <img src class="img-circle elevation-2" alt="User Image" />
+              <img
+                :src="'/images/users/'+user.image"
+                class="img-circle elevation-2"
+                alt="User Image"
+              />
             </div>
-            <div class="info"></div>
+            <div class="info text-primary">{{ user.name }}</div>
           </div>
           <!-- Sidebar Menu -->
           <nav class="mt-2">
@@ -269,10 +272,10 @@
               </li>
 
               <li class="nav-item">
-                <a class="nav-link">
+                <router-link :to="{name:'AdminLogout'}" class="nav-link">
                   <i class="nav-icon fa fa-power-off teal"></i>
-                </a>
-                <form id="logout-form" action method="POST" style="display: none;"></form>
+                  <p>Logout</p>
+                </router-link>
               </li>
             </ul>
           </nav>
@@ -341,12 +344,46 @@ $(function() {
 export default {
   name: "Dashboard",
   data() {
-    return {};
+    return {
+      user: {}
+    };
   },
   methods: {
     showMenuBar() {
       $("#menu-sidebar").toggle();
+    },
+
+    getUSer() {
+      axios
+        .post("/api/auth/getuser", {
+          token: this.$store.state.token
+        })
+        .then(response => {
+          this.user = response.data.data;
+        })
+        .catch(error => {
+          this.$store.dispatch("destroyToken");
+          this.user = null;
+          this.$router.push("/admlogin");
+        });
     }
+  },
+  beforeMount() {
+    axios
+      .post("/api/auth/getuser", {
+        token: this.$store.state.token
+      })
+      .then(response => {
+        this.user = response.data.data;
+      })
+      .catch(error => {
+        this.$store.dispatch("destroyToken");
+        this.user = null;
+        this.$router.push("/admlogin");
+      });
+  },
+  created() {
+    this.getUSer();
   }
 };
 </script>

@@ -48,4 +48,5 @@ class SizeController extends Controller
             return $e;
         }
     }
+
 }

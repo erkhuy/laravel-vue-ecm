@@ -18,4 +18,25 @@ class Role extends Model
         return $this->belongsToMany(Permission::class, 'permission_role');
 
     }
+    public function hasAccess(array $permissions): bool
+    {
+        foreach ($this->permissions as $per) {
+            if (in_array($per->name, $permissions)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // private function hasPermission(string $permission): bool
+    // {
+
+    //     foreach (Permission::all() as $per) {
+    //         if ($per->name == $permission) {
+    //             return true;
+    //         }
+
+    //     }
+    //     return false;
+    // }
 }

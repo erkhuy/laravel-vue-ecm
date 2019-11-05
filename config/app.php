@@ -179,6 +179,8 @@ return [
         //auth
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 
+        //permission
+        App\Providers\PermissionsServiceProvider::class,
     ],
 
     /*
@@ -232,6 +234,7 @@ return [
 
         'Image' => Intervention\Image\Facades\Image::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
     ],
 
 ];

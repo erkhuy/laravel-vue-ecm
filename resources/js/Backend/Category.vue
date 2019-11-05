@@ -88,10 +88,13 @@
                   <select v-model="form.parent_id" class="form-control">
                     <option value="0">&lt;----Chọn category cha---- &gt;</option>
                     <!-- <option value="0">Home</option> -->
-                    <option
+               
+                      <option
                       v-for="(category , index) in categories.data"
                       :key="index"
                       :value="category.id"
+                     :class="{ notActive: category.id>2}"
+                    
                     >{{ category.name }}</option>
                   </select>
 
@@ -260,5 +263,10 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+
+.notActive{
+  display:none !important;
+}
+
 </style>

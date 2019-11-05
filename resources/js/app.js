@@ -57,69 +57,100 @@ import Coupon from './Backend/Coupon.vue';
 import Category from './Backend/Category.vue';
 import SizeandColor from './Backend/SizeColor.vue';
 import Adminlogin from './layouts/AdminLogin.vue';
+import AdminLogout from './layouts/admLogout.vue';
 // fronend
+
+import Navbar from './Frontend/Navbar.vue';
 // contructor angd option
 window.$ = window.jQuery = require('jquery');
 let routes = [{
         path: '/admin',
         component: Dashboard,
+
         meta: {
-            auth: true
+            requiresAuth: true
         },
         children: [{
 
                 path: '/',
                 component: Dhome,
-                name: 'Dhome'
+                name: 'Dhome',
+                meta: {
+                    requiresAuth: true
+                },
             },
             {
 
                 path: 'users',
                 component: User,
-                name: 'User'
+                name: 'User',
+                meta: {
+                    requiresAuth: true
+                },
             },
 
             {
 
                 path: 'products',
                 component: Product,
-                name: 'Product'
+                name: 'Product',
+                meta: {
+                    requiresAuth: true
+                },
             },
             {
 
                 path: 'slides',
                 component: Slide,
-                name: 'Slide'
+                name: 'Slide',
+                meta: {
+                    requiresAuth: true
+                },
             },
             {
 
                 path: 'roles',
                 component: RolePermision,
-                name: 'RolePermision'
+                name: 'RolePermision',
+                meta: {
+                    requiresAuth: true
+                },
             },
             {
 
                 path: 'orders',
                 component: Order,
-                name: 'Order'
+                name: 'Order',
+                meta: {
+                    requiresAuth: true
+                },
             },
             {
 
                 path: 'coupon',
                 component: Coupon,
-                name: 'Coupon'
+                name: 'Coupon',
+                meta: {
+                    requiresAuth: true
+                },
             },
             {
 
                 path: 'category',
                 component: Category,
-                name: 'Category'
+                name: 'Category',
+                meta: {
+                    requiresAuth: true
+                },
             },
             {
 
                 path: 'sizeandcolor',
                 component: SizeandColor,
-                name: 'SizeandColor'
+                name: 'SizeandColor',
+                meta: {
+                    requiresAuth: true
+                },
             },
 
             {
@@ -137,9 +168,18 @@ let routes = [{
         component: Adminlogin,
         name: 'Adminlogin',
         meta: {
+            requiresVisitor: true
+        },
+    },
+    {
+        path: '/admlogout',
+        component: AdminLogout,
+        name: 'AdminLogout',
+        meta: {
             auth: false
         },
     },
+
     {
         path: '/',
         component: Home,
@@ -179,7 +219,39 @@ Vue.component('dashbnoard', require('./layouts/Dashboard.vue').default);
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('v-calendar', Calendar.default);
+// fronend
+Vue.component('navbar', require('./Frontend/Navbar.vue').default);
+Vue.component('main-slide', require('./Frontend/Slide.vue').default);
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+        if (!store.getters.loggedIn) {
+            next({
+                name: 'Adminlogin',
+
+            })
+        } else {
+            next()
+        }
+
+    } else if (to.matched.some(record => record.meta.requiresVisitor)) {
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+        if (store.getters.loggedIn) {
+            next({
+                path: '/admin',
+            })
+        } else {
+            next()
+        }
+    } else {
+        next() // make sure to always call next()!
+    }
+})
 const app = new Vue({
     el: '#app',
+    store,
     router,
+
 });

@@ -146,4 +146,8 @@ class SlideController extends Controller
 
         }
     }
+    public function getSlides()
+    {
+        return Slide::all()->where('status', 1);
+    }
 }

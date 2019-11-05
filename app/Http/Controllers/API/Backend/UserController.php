@@ -159,4 +159,8 @@ class UserController extends Controller
         }
 
     }
+    public function getuser()
+    {
+        return \response()->json(auth()->user()->tokens);
+    }
 }
