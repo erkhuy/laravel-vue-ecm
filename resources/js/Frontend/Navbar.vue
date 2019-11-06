@@ -96,7 +96,7 @@
 
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav mr-auto">                  
-                             <li class="nav-item  "v-for="(cate , index ) in categories" :key="index" >
+                             <li class="nav-item " v-for="(cate , index ) in categories" :key="index" >
                              <router-link class="nav-link  " title="Check Out"
                                     :to="{name:'Category'}" 
                                    v-show="cate.parent_id.id==0"

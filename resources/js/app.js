@@ -10,6 +10,9 @@ import VCalendar from 'v-calendar';
 import { setupCalendar, Calendar } from 'v-calendar';
 import store from './store';
 
+import VueCarousel from 'vue-carousel';
+
+
 
 //import { routers } from './router/router';
 // window.use
@@ -26,12 +29,14 @@ Vue.use(VCalendar, {
 Vue.use(VueRouter)
 window.axios = require('axios');
 Vue.use(Vue2Filters);
+Vue.use(VueCarousel);
 // Vue.use(require('@websanova/vue-auth'), {
 //         auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
 //         http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
 //         router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js')
 //     })
 // appcintructor
+
 const toast = Swal.mixin({
     toast: true,
     position: 'top-end',
@@ -222,6 +227,10 @@ Vue.component('v-calendar', Calendar.default);
 // fronend
 Vue.component('navbar', require('./Frontend/Navbar.vue').default);
 Vue.component('main-slide', require('./Frontend/Slide.vue').default);
+Vue.component('main-footer', require('./layouts/Footer.vue').default);
+Vue.component('main-product', require('./Frontend/Product.vue').default);
+
+
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         // this route requires auth, check if logged in

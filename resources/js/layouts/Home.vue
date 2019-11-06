@@ -3,6 +3,10 @@
     <main>
       <navbar></navbar>
       <main-slide></main-slide>
+
+      <main-product></main-product>
+
+      <main-footer></main-footer>
     </main>
   </div>
 </template>

@@ -3,18 +3,23 @@
     <aside class="slide">
       <div class="row">
         <div class="col-lg-12 col-md-12-col-sm-12">
-          <div class="slide__wrap">
-            <div class="slide__item" v-for="(slide , index) in slides" :key="index">
+       
+          <carousel :per-page="1" :autoplay="true" :autoplayTimeout="2000":loop="true" paginationPosition="bottom-overlay">
+            <slide v-for="(slide , index) in slides" :key="index">
+                <div class="slide__item" >
               <div class="slide__item__img">
                 <a>
-                  <img :src="'/images/slide/'+slide.img" />
+                  <img :src="'/images/slides/'+slide.image" />
                 </a>
               </div>
               <div class="slide__item__des">
                 <p>{{ slide.description }}</p>
               </div>
             </div>
-          </div>
+            </slide>
+           
+            </carousel>
+           
         </div>
       </div>
     </aside>
@@ -22,6 +27,7 @@
 </template>
 <script>
 export default {
+
   data() {
     return {
       slides: {}
@@ -44,3 +50,25 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.slide {
+  &__item {
+    &__img {
+      a > img {
+        width: 100%;
+        max-height: 600px;
+        height: 100%;
+      }
+    }
+     position:relative;
+    &__des{
+        position:absolute;
+        z-index:6;
+        left:40%;
+        bottom:10%;
+        font-size:2em;
+    }
+  }
+}
+
+</style>
