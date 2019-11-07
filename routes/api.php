@@ -48,4 +48,6 @@ Route::group(['prefix' => 'admin', 'namespace' => 'API\Backend'], function () {
 
 Route::group(['namespace' => 'API\Frontend'], function () {
     Route::get('getCategories', 'CategoryController@getCategories');
+    Route::get('getNewProduct', 'GetdataController@getNewProduct');
+
 });

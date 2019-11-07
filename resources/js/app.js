@@ -229,7 +229,7 @@ Vue.component('navbar', require('./Frontend/Navbar.vue').default);
 Vue.component('main-slide', require('./Frontend/Slide.vue').default);
 Vue.component('main-footer', require('./layouts/Footer.vue').default);
 Vue.component('main-product', require('./Frontend/Product.vue').default);
-
+Vue.component('new-product', require('./Frontend/NewProductlist.vue').default);
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
