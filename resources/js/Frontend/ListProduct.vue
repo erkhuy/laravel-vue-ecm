@@ -1,7 +1,7 @@
 <template>
   <div class="row list-product">
     <div class="list-product__title col-lg-12 col-md-12-col-sm-12">
-      <h3>Sản phẩm mới</h3>
+      <h3>Sản phẩm khuyễn mãi</h3>
     </div>
     <div class="list-product__wrap col-lg-12 col-md-12-col-sm-12">
       <!-- product item -->

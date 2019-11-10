@@ -3,7 +3,7 @@
     <main>
       <navbar></navbar>
       <main-slide></main-slide>
-      <main-product></main-product>
+      <router-view></router-view>
       <main-footer></main-footer>
     </main>
   </div>

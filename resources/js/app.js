@@ -64,8 +64,9 @@ import SizeandColor from './Backend/SizeColor.vue';
 import Adminlogin from './layouts/AdminLogin.vue';
 import AdminLogout from './layouts/admLogout.vue';
 // fronend
-
+import VIewProduct from './Frontend/ViewProduct.vue';
 import Navbar from './Frontend/Navbar.vue';
+import FHome from './Frontend/FHome.vue';
 // contructor angd option
 window.$ = window.jQuery = require('jquery');
 let routes = [{
@@ -76,7 +77,6 @@ let routes = [{
             requiresAuth: true
         },
         children: [{
-
                 path: '/',
                 component: Dhome,
                 name: 'Dhome',
@@ -188,8 +188,18 @@ let routes = [{
     {
         path: '/',
         component: Home,
-
         children: [{
+                path: '',
+                component: FHome,
+                name: 'FHome'
+            },
+            {
+                path: 'product/:id',
+                component: VIewProduct,
+                name: 'VIewProduct',
+                props: true,
+            },
+            {
                 path: '*',
                 component: Error404,
                 name: 'Error404'
@@ -197,6 +207,8 @@ let routes = [{
 
         ]
     },
+
+
 
 ];
 const router = new VueRouter({
@@ -230,7 +242,9 @@ Vue.component('main-slide', require('./Frontend/Slide.vue').default);
 Vue.component('main-footer', require('./layouts/Footer.vue').default);
 Vue.component('main-product', require('./Frontend/Product.vue').default);
 Vue.component('new-product', require('./Frontend/NewProductlist.vue').default);
-
+Vue.component('list-product', require('./Frontend/ListProduct.vue').default);
+Vue.component("Addtocart", require("./Frontend/Addtocart.vue").default);
+Vue.component("Minicart", require("./Frontend/Minicart.vue").default);
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         // this route requires auth, check if logged in
