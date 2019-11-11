@@ -1,7 +1,7 @@
 <template>
   <div>
     <aside class="container">
-      <div v-if="status" class="row p-bg">
+      <div v-if="status" class="row p-bg mt-3 mb-3">
         <div class="col-lg-12 col-md-12-col-sm-12">
           <p>Sản phẩm mã số :{{ product.id }}</p>
         </div>
@@ -34,11 +34,11 @@
             <p>Mã số sản phẩm:{{ product.id }}</p>
             <div>
               <label for="qty">Chọn số lượng</label>
-              <select name="qty">
+              <select name="qty" v-model="productcart.qty">
                 <option v-for="(am , i) in product.amount" :key="i" :value="am">{{ am }}</option>
               </select>
               <label for="size">Chọn kích cỡ</label>
-              <select name="size">
+              <select name="size" v-model="productcart.size">
                 <option
                   v-for="(size , i) in product.sizes"
                   :key="i"
@@ -55,20 +55,41 @@
                   v-for="(color , i) in product.colors"
                   :key="i"
                   :style="{ background:color.color }"
-                ></div>
+                >
+                  <input
+                    type="checkbox"
+                    class="checkcolor"
+                    :value="color.color"
+                    v-model="productcart.color"
+                  />
+                </div>
               </div>
             </div>
             <p>Khuyễn mãi {{ product.sale }} %</p>
+            <p v-if="product.sale >0">
+              Giá tiền:
+              <span
+                style="text-decoration: line-through;"
+              >{{product.price |currency('VND', 0, { symbolOnLeft: false }) }}</span>
+              <span>{{ (product.price-product.price*(product.sale/100)) |currency('VND', 0, { symbolOnLeft: false }) }}</span>
+            </p>
+            <p v-else>Giá tiền:{{ product.price |currency('VND', 0, { symbolOnLeft: false }) }}</p>
             <div class="btn-box__wrap">
-              <Addtocart></Addtocart>
-              <button>
+              <a
+                class="btn btn-outline-primary"
+                title="Thêm vào giỏ hàng"
+                @click.prevent="addToCart"
+              >
+                <i class="fa fa-cart-plus"></i> Thêm vào giỏ
+              </a>
+              <a class="btn btn-outline-dark ml-2" title="Mua ngay">
                 <i class="fa fa-money-bill-alt"></i> Mua ngay
-              </button>
+              </a>
             </div>
           </div>
         </div>
         <div class="col-lg-12 col-md-12-col-sm-12 product-detail__des">
-          <p>Thông tin về sản phẩm:{{ product.name }}</p>
+          <h4>Thông tin về sản phẩm:{{ product.name }}</h4>
           <p>{{ product.description }}</p>
         </div>
       </div>
@@ -80,7 +101,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-12 col-md-12-col-sm-12">
-            <p>Sản phẩm mới</p>
+            <h3>Sản phẩm mới</h3>
             <carousel
               :per-page="5"
               :autoplay="true"
@@ -124,7 +145,16 @@ export default {
       products: {},
       proID: "",
       status: null,
-      productimg: ""
+      productimg: "",
+      productcart: {
+        name: "",
+        id: "",
+        price: "",
+        image: "",
+        color: [],
+        size: "",
+        qty: ""
+      }
     };
   },
   methods: {
@@ -132,6 +162,10 @@ export default {
     getProducts() {},
     setimg(img) {
       this.productimg = "/images/products/" + img;
+    },
+    addToCart() {
+      $("#cartList").modal("show");
+      this.$store.commit("addToCart", this.productcart);
     }
   },
   created() {
@@ -152,6 +186,14 @@ export default {
       .then(resp => {
         this.product = resp.data;
         this.status = true;
+        this.productcart.name = resp.data.name;
+        this.productcart.id = resp.data.id;
+        this.productcart.price = resp.data.price;
+        this.productcart.sale = resp.data.sale;
+        this.productcart.qty = 1;
+        this.productcart.size = resp.data.sizes[0].size;
+        this.productcart.color.push(resp.data.colors[0].color);
+        this.productcart.image = resp.data.image;
       })
       .catch(err => {
         this.status = false;
@@ -169,6 +211,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.product-detail__info {
+  p {
+    font-weight: bold;
+  }
+}
+.fn-w {
+  font-weight: bold;
+}
 .p-bg {
   background: #77777738;
 }
@@ -180,12 +230,19 @@ export default {
     a {
       img {
         width: 100%;
+        max-width: 150px;
+        max-height: 130px;
       }
     }
   }
 }
 .product-detail__wrap {
   padding-left: 3%;
+}
+.product-detail__des {
+  h4 {
+    border-bottom: 1px solid #333;
+  }
 }
 .product-detail__image {
   cursor: pointer;
@@ -200,13 +257,20 @@ export default {
 .box-color {
   width: 30px;
   height: 30px;
-
+  position: relative;
   border-radius: 3px;
   margin: 0 2%;
   &:hover,
   &:active,
   &:focus {
     border: 1px solid rgb(6, 22, 238);
+  }
+  .checkcolor {
+    position: absolute;
+
+    height: 50%;
+    width: 100%;
+    bottom: 25%;
   }
 }
 .color-box__wrap,

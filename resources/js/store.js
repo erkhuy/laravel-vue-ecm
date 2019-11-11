@@ -4,9 +4,12 @@ import { reject } from "q";
 import { constants } from "crypto";
 
 Vue.use(Vuex);
+let cart = window.localStorage.getItem("cart");
 export default new Vuex.Store({
     state: {
         token: localStorage.getItem('access_token') || null,
+        cart: cart ? JSON.parse(cart) : [],
+        buynow: '',
     },
     getters: {
         loggedIn(state) {
@@ -19,6 +22,32 @@ export default new Vuex.Store({
         },
         destroyToken(state) {
             state.token = null;
+        },
+        addToCart(state, payload) {
+            let found = state.cart.indexOf(payload);
+            console.log(found);
+            if (found > 0) {
+                state.cart[found] = payload;
+            } else {
+                state.cart.push(payload);
+            }
+
+            console.log(JSON.stringify(state.cart));
+
+            this.commit("saveData");
+        },
+        saveData(state) {
+            localStorage.setItem("cart", JSON.stringify(state.cart));
+        },
+        removeFromcart(state, payload) {
+
+            let index = state.cart.indexOf(payload);
+            state.cart.splice(index, 1);
+            this.commit("saveData");
+
+        },
+        removeAllCart() {
+            localStorage.removeItem('cart');
         }
     },
     actions: {

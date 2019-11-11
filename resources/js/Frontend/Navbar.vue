@@ -69,9 +69,10 @@
                 </li>
 
                 <li class="nav-item">
-                  <router-link class="nav-link text-dark" title="Cart" :to="{name:'Category'}">
-                    <i class="fa fa-lock pr-1"></i>Cart(0)
-                  </router-link>
+                  <a class="nav-link text-dark" title="Cart" @click="showCart">
+                    <i class="fa fa-lock pr-1"></i>
+                    Cart({{ $store.state.cart.length }})
+                  </a>
                 </li>
               </ul>
             </nav>
@@ -120,6 +121,7 @@
         </div>
       </aside>
     </section>
+    <Minicart></Minicart>
   </div>
 </template>
 <script>
@@ -139,6 +141,9 @@ export default {
         .catch(err => {
           console.error(err);
         });
+    },
+    showCart() {
+      $("#cartList").modal("show");
     }
   },
   created() {

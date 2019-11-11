@@ -1,8 +1,8 @@
 <template>
   <div class="add-to-cart">
-    <button class="btn btn-primary" @click="addToCart">
+    <a class="btn btn-outline-primary" title="Thêm vào giỏ hàng" @click.prevent="addToCart">
       <i class="fa fa-cart-plus"></i> Thêm vào giỏ
-    </button>
+    </a>
   </div>
 </template>
 
@@ -10,19 +10,24 @@
 export default {
   name: "Addtocart",
   props: {
+    id: Number,
     name: String,
-    price: String,
-    productId: String,
-    image: String
+    image: String,
+    qty: Number,
+    size: String,
+    color: Array,
+    sale: Number
   },
   data() {
     return {
       item: {
-        productName: this.name,
-        productprice: this.price,
-        product_id: this.productId,
-        productImg: this.image,
-        qty: 1
+        id: this.id,
+        name: this.name,
+        image: this.image,
+        qty: this.qty,
+        size: this.size,
+        color: this.color,
+        sale: this.sale
       }
     };
   },

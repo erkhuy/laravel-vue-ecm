@@ -67,6 +67,7 @@ import AdminLogout from './layouts/admLogout.vue';
 import VIewProduct from './Frontend/ViewProduct.vue';
 import Navbar from './Frontend/Navbar.vue';
 import FHome from './Frontend/FHome.vue';
+import CheckOut from './Frontend/Checkout.vue';
 // contructor angd option
 window.$ = window.jQuery = require('jquery');
 let routes = [{
@@ -198,6 +199,12 @@ let routes = [{
                 component: VIewProduct,
                 name: 'VIewProduct',
                 props: true,
+            },
+            {
+                path: 'checkout',
+                component: CheckOut,
+                name: 'CheckOut',
+
             },
             {
                 path: '*',
