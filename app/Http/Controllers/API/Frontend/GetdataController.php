@@ -11,7 +11,7 @@ class GetdataController extends Controller
     // product
     public function getNewProduct()
     {
-        return Product::where('status', 1)->orderBy('id', 'desc')->get();
+        return ProductResource::collection(Product::where('status', 1)->orderBy('id', 'desc')->get());
     }
     public function getProduct($id)
     {

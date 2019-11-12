@@ -6841,137 +6841,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      productsNew: {}
+      productsNew: {},
+      item: new Form({
+        name: "",
+        id: "",
+        price: "",
+        image: "",
+        color: [],
+        size: "",
+        qty: ""
+      })
     };
   },
   methods: {
@@ -6979,10 +6861,29 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get("/api/getNewProduct").then(function (res) {
-        _this.productsNew = res.data;
+        _this.productsNew = res.data.data;
       })["catch"](function (err) {
         console.error(err);
       });
+    },
+    productDetail: function productDetail(proid) {
+      //this.$router.push({ name: "VIewProduct", params: { id: proid } });
+      this.$router.go("/product/" + proid);
+    },
+    addCart: function addCart(cartpro) {
+      this.item.reset();
+      this.item.name = cartpro.name;
+      this.item.id = cartpro.id;
+      this.item.price = cartpro.price;
+      this.item.sale = cartpro.sale;
+      this.item.qty = 1;
+      this.item.size = cartpro.sizes[0].size;
+      this.item.color.push(cartpro.colors[0].color);
+      this.item.image = cartpro.image;
+      this.$store.commit("addToCart", this.item);
+    },
+    buyNow: function buyNow(cartpro) {
+      this.addCart(cartpro);
     }
   },
   computed: {},
@@ -7252,6 +7153,12 @@ __webpack_require__.r(__webpack_exports__);
     addToCart: function addToCart() {
       $("#cartList").modal("show");
       this.$store.commit("addToCart", this.productcart);
+    },
+    buyNow: function buyNow() {
+      this.$store.commit("addToCart", this.productcart);
+      this.$store.push({
+        name: "CheckOut"
+      });
     }
   },
   created: function created() {
@@ -21334,7 +21241,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".list-product__title > h3 {\n  padding: 2% 0;\n  border-bottom: 1px solid #737373;\n  font-style: italic;\n}\n.list-product__wrap {\n  width: 100%;\n  display: flex;\n  flex-wrap: wrap;\n}\n.list-product__wrap .product-item {\n  padding: 1%;\n  position: relative;\n  transition: all 1s ease;\n  width: 25%;\n}\n.list-product__wrap .product-item:after {\n  position: absolute;\n  content: \"\";\n  top: 0;\n  width: 100%;\n  z-index: 20;\n  height: 0%;\n  transition: all 1s ease;\n  left: 0;\n  opacity: 0;\n}\n.list-product__wrap .product-item:hover:after {\n  border: 1px solid #737373;\n  height: 100%;\n  opacity: 1;\n  background-color: rgba(95, 84, 83, 0.171);\n}\n.list-product__wrap .product-item:hover .product-item__btn {\n  opacity: 1;\n  pointer-events: all;\n}\n.list-product__wrap .product-item__wrap {\n  display: flex;\n  flex-direction: column;\n  position: relative;\n}\n.list-product__wrap .product-item__image img {\n  max-width: 100%;\n  height: auto;\n}\n.list-product__wrap .product-item__des__des {\n  width: 100%;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  -webkit-line-clamp: 2;\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n}\n.list-product__wrap .product-item__btn {\n  position: absolute;\n  display: flex;\n  flex-direction: row;\n  align-self: center;\n  width: 95%;\n  bottom: 50%;\n  z-index: 23;\n  opacity: 0;\n  pointer-events: none;\n  transition: all 1s ease;\n}\n.list-product__wrap .product-item__btn a {\n  width: 30%;\n  justify-content: center;\n  text-align: center;\n  margin: 0 2%;\n  transition: all 1s ease;\n  border-radius: 5px;\n  color: #1f2d3d;\n  background: rgba(96, 210, 152, 0.75);\n}\n.list-product__wrap .product-item__btn a:hover {\n  background-color: #0cf565c2;\n}\n.list-product__wrap .product-item__btn a:last-child {\n  margin-right: 0;\n  color: rgba(245, 22, 6, 0.993);\n}\n.list-product__wrap .product-item__btn a:first-child {\n  margin-left: 0;\n  color: #0c0c0c;\n}\n@-webkit-keyframes imageanimate {\nto {\n    opacity: 0;\n    height: 0;\n}\nfrom {\n    opacity: 1;\n    height: 100%;\n}\n}\n@keyframes imageanimate {\nto {\n    opacity: 0;\n    height: 0;\n}\nfrom {\n    opacity: 1;\n    height: 100%;\n}\n}", ""]);
+exports.push([module.i, ".list-product__title > h3 {\n  padding: 2% 0;\n  border-bottom: 1px solid #737373;\n  font-style: italic;\n}\n.list-product__wrap {\n  width: 100%;\n  display: flex;\n  flex-wrap: wrap;\n}\n.list-product__wrap .product-item {\n  padding: 1%;\n  position: relative;\n  transition: all 1s ease;\n  width: 25%;\n}\n.list-product__wrap .product-item:after {\n  position: absolute;\n  content: \"\";\n  top: 0;\n  width: 100%;\n  z-index: 20;\n  height: 0%;\n  transition: all 1s ease;\n  left: 0;\n  opacity: 0;\n}\n.list-product__wrap .product-item:hover:after {\n  border: 1px solid #737373;\n  height: 100%;\n  opacity: 1;\n  background-color: rgba(95, 84, 83, 0.171);\n}\n.list-product__wrap .product-item:hover .product-item__btn {\n  opacity: 1;\n  pointer-events: all;\n}\n.list-product__wrap .product-item__wrap {\n  display: flex;\n  flex-direction: column;\n  position: relative;\n}\n.list-product__wrap .product-item__image img {\n  max-width: 100%;\n  max-height: 172px;\n  height: 100% !important;\n}\n.list-product__wrap .product-item__des__des {\n  width: 100%;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  -webkit-line-clamp: 2;\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n}\n.list-product__wrap .product-item__btn {\n  position: absolute;\n  display: flex;\n  flex-direction: row;\n  align-self: center;\n  width: 95%;\n  bottom: 50%;\n  z-index: 23;\n  opacity: 0;\n  pointer-events: none;\n  transition: all 1s ease;\n}\n.list-product__wrap .product-item__btn a {\n  width: 30%;\n  justify-content: center;\n  text-align: center;\n  margin: 0 2%;\n  transition: all 1s ease;\n  border-radius: 5px;\n  color: #1f2d3d;\n  background: rgba(96, 210, 152, 0.75);\n}\n.list-product__wrap .product-item__btn a:hover {\n  background-color: #0cf565c2;\n}\n.list-product__wrap .product-item__btn a:last-child {\n  margin-right: 0;\n  color: rgba(245, 22, 6, 0.993);\n}\n.list-product__wrap .product-item__btn a:first-child {\n  margin-left: 0;\n  color: #0c0c0c;\n}\n@-webkit-keyframes imageanimate {\nto {\n    opacity: 0;\n    height: 0;\n}\nfrom {\n    opacity: 1;\n    height: 100%;\n}\n}\n@keyframes imageanimate {\nto {\n    opacity: 0;\n    height: 0;\n}\nfrom {\n    opacity: 1;\n    height: 100%;\n}\n}", ""]);
 
 // exports
 
@@ -62332,87 +62239,95 @@ var render = function() {
     _c(
       "div",
       { staticClass: "list-product__wrap col-lg-12 col-md-12-col-sm-12" },
-      [
-        _c("div", { staticClass: "product-item" }, [
+      _vm._l(_vm.productsNew, function(newpro, index) {
+        return _c("div", { key: index, staticClass: "product-item" }, [
           _c("div", { staticClass: "product-item__wrap" }, [
             _c("div", { staticClass: "product-item__image" }, [
-              _c("a", { attrs: { href: "#", title: "#" } }, [
-                _c("img", {
-                  attrs: { src: "/images/slides/1572963608.jpeg", alt: "#" }
-                })
+              _c(
+                "a",
+                {
+                  attrs: { href: "#", title: "#" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                    }
+                  }
+                },
+                [
+                  _c("img", {
+                    attrs: { src: "/images/products/" + newpro.image, alt: "#" }
+                  })
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "product-item__des" }, [
+              _c("span", { staticClass: "product-item__des__name" }, [
+                _vm._v(_vm._s(newpro.name))
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "product-item__des__price" }, [
+                _vm._v(
+                  _vm._s(
+                    _vm._f("currency")(newpro.price, "VND", 0, {
+                      symbolOnLeft: false
+                    })
+                  )
+                )
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "product-item__des__des" }, [
+                _vm._v(_vm._s(newpro.description))
               ])
             ]),
             _vm._v(" "),
-            _vm._m(1),
-            _vm._v(" "),
-            _vm._m(2)
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "product-item" }, [
-          _c("div", { staticClass: "product-item__wrap" }, [
-            _c("div", { staticClass: "product-item__image" }, [
-              _c("a", { attrs: { href: "#", title: "#" } }, [
-                _c("img", {
-                  attrs: { src: "/images/slides/1572963608.jpeg", alt: "#" }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(3),
-            _vm._v(" "),
-            _vm._m(4)
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "product-item" }, [
-          _c("div", { staticClass: "product-item__wrap" }, [
-            _c("div", { staticClass: "product-item__image" }, [
-              _c("a", { attrs: { href: "#", title: "#" } }, [
-                _c("img", {
-                  attrs: { src: "/images/slides/1572963608.jpeg", alt: "#" }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(5),
-            _vm._v(" "),
-            _vm._m(6)
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "product-item" }, [
-          _c("div", { staticClass: "product-item__wrap" }, [
-            _c("div", { staticClass: "product-item__image" }, [
-              _c("a", { attrs: { href: "#", title: "#" } }, [
-                _c("img", {
-                  attrs: { src: "/images/slides/1572963608.jpeg", alt: "#" }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(7),
-            _vm._v(" "),
-            _vm._m(8)
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "product-item" }, [
-          _c("div", { staticClass: "product-item__wrap" }, [
-            _c("div", { staticClass: "product-item__image" }, [
-              _c("a", { attrs: { href: "#", title: "#" } }, [
-                _c("img", {
-                  attrs: { src: "/images/slides/1572963608.jpeg", alt: "#" }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(9),
-            _vm._v(" "),
-            _vm._m(10)
+            _c("div", { staticClass: "product-item__btn" }, [
+              _c(
+                "a",
+                {
+                  attrs: { href: "", title: "Chi tiết" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.productDetail(newpro.id)
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-eye" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  attrs: { href: "", title: "Mua ngay" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.buyNow(newpro)
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-money-bill-alt" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  attrs: { href: "", title: "Thêm vào giỏ hàng" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.addCart(newpro)
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fa fa-cart-plus" })]
+              )
+            ])
           ])
         ])
-      ]
+      }),
+      0
     )
   ])
 }
@@ -62426,196 +62341,6 @@ var staticRenderFns = [
       { staticClass: "list-product__title col-lg-12 col-md-12-col-sm-12" },
       [_c("h3", [_vm._v("Sản phẩm mới")])]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "product-item__des" }, [
-      _c("span", { staticClass: "product-item__des__name" }, [
-        _vm._v("Hàng abcd")
-      ]),
-      _vm._v(" "),
-      _c("span", { staticClass: "product-item__des__price" }, [
-        _vm._v("120VND")
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "product-item__des__des" }, [
-        _vm._v(
-          "\n            hàdh;ahf;ahn;fhna;fn;abna;jfá;jfjná;fjáb\n            nfffffffffffffffffffffffffffffffffffffffff\n            ffffffffffffffffffffffffff\n          "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "product-item__btn" }, [
-      _c("a", { attrs: { href: "", title: "Chi tiết" } }, [
-        _c("i", { staticClass: "fa fa-eye" })
-      ]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "", title: "Mua ngay" } }, [
-        _c("i", { staticClass: "fa fa-money-bill-alt" })
-      ]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "", title: "Thêm vào giỏ hàng" } }, [
-        _c("i", { staticClass: "fa fa-cart-plus" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "product-item__des" }, [
-      _c("span", { staticClass: "product-item__des__name" }, [
-        _vm._v("Hàng abcd")
-      ]),
-      _vm._v(" "),
-      _c("span", { staticClass: "product-item__des__price" }, [
-        _vm._v("120VND")
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "product-item__des__des" }, [
-        _vm._v(
-          "\n            hàdh;ahf;ahn;fhna;fn;abna;jfá;jfjná;fjá\n            bnffffffffffffffffffffffffffffffffffffff\n            fffffffffffffffffffffffffffff\n          "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "product-item__btn" }, [
-      _c("a", { attrs: { href: "", title: "Chi tiết" } }, [
-        _c("i", { staticClass: "fa fa-eye" })
-      ]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "", title: "Mua ngay" } }, [
-        _c("i", { staticClass: "fa fa-money-bill-alt" })
-      ]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "", title: "Thêm vào giỏ hàng" } }, [
-        _c("i", { staticClass: "fa fa-cart-plus" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "product-item__des" }, [
-      _c("span", { staticClass: "product-item__des__name" }, [
-        _vm._v("Hàng abcd")
-      ]),
-      _vm._v(" "),
-      _c("span", { staticClass: "product-item__des__price" }, [
-        _vm._v("120VND")
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "product-item__des__des" }, [
-        _vm._v(
-          "hàdh;ahf;ahn;fhna;fn;abna;jfá;jfjná;fjábnfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "product-item__btn" }, [
-      _c("a", { attrs: { href: "", title: "Chi tiết" } }, [
-        _c("i", { staticClass: "fa fa-eye" })
-      ]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "", title: "Mua ngay" } }, [
-        _c("i", { staticClass: "fa fa-money-bill-alt" })
-      ]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "", title: "Thêm vào giỏ hàng" } }, [
-        _c("i", { staticClass: "fa fa-cart-plus" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "product-item__des" }, [
-      _c("span", { staticClass: "product-item__des__name" }, [
-        _vm._v("Hàng abcd")
-      ]),
-      _vm._v(" "),
-      _c("span", { staticClass: "product-item__des__price" }, [
-        _vm._v("120VND")
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "product-item__des__des" }, [
-        _vm._v(
-          "\n            hàdh;ahf;ahn;fhna;fn;abna;jfá;jfjná;fjáb\n            nffffffffffffffffffffffffffffffffffffffff\n            fffffffffffffffffffffffffff\n          "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "product-item__btn" }, [
-      _c("a", { attrs: { href: "", title: "Chi tiết" } }, [
-        _c("i", { staticClass: "fa fa-eye" })
-      ]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "", title: "Mua ngay" } }, [
-        _c("i", { staticClass: "fa fa-money-bill-alt" })
-      ]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "", title: "Thêm vào giỏ hàng" } }, [
-        _c("i", { staticClass: "fa fa-cart-plus" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "product-item__des" }, [
-      _c("span", { staticClass: "product-item__des__name" }, [
-        _vm._v("Hàng abcd")
-      ]),
-      _vm._v(" "),
-      _c("span", { staticClass: "product-item__des__price" }, [
-        _vm._v("120VND")
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "product-item__des__des" }, [
-        _vm._v(
-          "\n            hàdh;ahf;ahn;fhna;fn;abna;jfá;jfjná;fjáfffffffffffffffffffffff\n            bgfsgsdfffffffffffffffffffffffffffffffffffffffffnffffffffffffff\n            fffffff\n            ffffffffffffffffffffffffffffffffffffffffffffff\n          "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "product-item__btn" }, [
-      _c("a", { attrs: { href: "", title: "Chi tiết" } }, [
-        _c("i", { staticClass: "fa fa-eye" })
-      ]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "", title: "Mua ngay" } }, [
-        _c("i", { staticClass: "fa fa-money-bill-alt" })
-      ]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "", title: "Thêm vào giỏ hàng" } }, [
-        _c("i", { staticClass: "fa fa-cart-plus" })
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -63050,7 +62775,23 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
-                    _vm._m(0)
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-outline-dark ml-2",
+                        attrs: { title: "Mua ngay" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.buyNow($event)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-money-bill-alt" }),
+                        _vm._v(" Mua ngay\n            ")
+                      ]
+                    )
                   ])
                 ])
               ]
@@ -63139,24 +62880,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "btn btn-outline-dark ml-2",
-        attrs: { title: "Mua ngay" }
-      },
-      [
-        _c("i", { staticClass: "fa fa-money-bill-alt" }),
-        _vm._v(" Mua ngay\n            ")
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

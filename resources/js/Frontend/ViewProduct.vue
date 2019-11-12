@@ -82,7 +82,7 @@
               >
                 <i class="fa fa-cart-plus"></i> Thêm vào giỏ
               </a>
-              <a class="btn btn-outline-dark ml-2" title="Mua ngay">
+              <a class="btn btn-outline-dark ml-2" title="Mua ngay" @click.prevent="buyNow">
                 <i class="fa fa-money-bill-alt"></i> Mua ngay
               </a>
             </div>
@@ -166,6 +166,10 @@ export default {
     addToCart() {
       $("#cartList").modal("show");
       this.$store.commit("addToCart", this.productcart);
+    },
+    buyNow() {
+      this.$store.commit("addToCart", this.productcart);
+      this.$store.push({ name: "CheckOut" });
     }
   },
   created() {

@@ -5,30 +5,28 @@
     </div>
     <div class="list-product__wrap col-lg-12 col-md-12-col-sm-12">
       <!-- product item -->
-      <div class="product-item">
+      <div class="product-item" v-for="(newpro, index ) in productsNew" :key="index">
         <div class="product-item__wrap">
           <div class="product-item__image">
-            <a href="#" title="#">
-              <img :src="'/images/slides/1572963608.jpeg'" alt="#" />
+            <a href="#" title="#" @click.prevent>
+              <img :src="'/images/products/'+newpro.image" alt="#" />
             </a>
           </div>
           <div class="product-item__des">
-            <span class="product-item__des__name">Hàng abcd</span>
-            <span class="product-item__des__price">120VND</span>
-            <p class="product-item__des__des">
-              hàdh;ahf;ahn;fhna;fn;abna;jfá;jfjná;fjáb
-              nfffffffffffffffffffffffffffffffffffffffff
-              ffffffffffffffffffffffffff
-            </p>
+            <span class="product-item__des__name">{{ newpro.name }}</span>
+            <span
+              class="product-item__des__price"
+            >{{ newpro.price |currency('VND', 0, { symbolOnLeft: false }) }}</span>
+            <p class="product-item__des__des">{{ newpro.description }}</p>
           </div>
           <div class="product-item__btn">
-            <a href title="Chi tiết">
+            <a href title="Chi tiết" @click.prevent="productDetail(newpro.id)">
               <i class="fa fa-eye"></i>
             </a>
-            <a href title="Mua ngay">
+            <a href title="Mua ngay" @click.prevent="buyNow(newpro)">
               <i class="fa fa-money-bill-alt"></i>
             </a>
-            <a href title="Thêm vào giỏ hàng">
+            <a href title="Thêm vào giỏ hàng" @click.prevent=" addCart(newpro)">
               <i class="fa fa-cart-plus"></i>
             </a>
           </div>
@@ -36,131 +34,6 @@
       </div>
 
       <!-- endproduc item -->
-      <!-- product item -->
-      <div class="product-item">
-        <div class="product-item__wrap">
-          <div class="product-item__image">
-            <a href="#" title="#">
-              <img :src="'/images/slides/1572963608.jpeg'" alt="#" />
-            </a>
-          </div>
-          <div class="product-item__des">
-            <span class="product-item__des__name">Hàng abcd</span>
-            <span class="product-item__des__price">120VND</span>
-            <p class="product-item__des__des">
-              hàdh;ahf;ahn;fhna;fn;abna;jfá;jfjná;fjá
-              bnffffffffffffffffffffffffffffffffffffff
-              fffffffffffffffffffffffffffff
-            </p>
-          </div>
-          <div class="product-item__btn">
-            <a href title="Chi tiết">
-              <i class="fa fa-eye"></i>
-            </a>
-            <a href title="Mua ngay">
-              <i class="fa fa-money-bill-alt"></i>
-            </a>
-            <a href title="Thêm vào giỏ hàng">
-              <i class="fa fa-cart-plus"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- endproduc item -->
-      <!-- product item -->
-      <div class="product-item">
-        <div class="product-item__wrap">
-          <div class="product-item__image">
-            <a href="#" title="#">
-              <img :src="'/images/slides/1572963608.jpeg'" alt="#" />
-            </a>
-          </div>
-          <div class="product-item__des">
-            <span class="product-item__des__name">Hàng abcd</span>
-            <span class="product-item__des__price">120VND</span>
-            <p
-              class="product-item__des__des"
-            >hàdh;ahf;ahn;fhna;fn;abna;jfá;jfjná;fjábnfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</p>
-          </div>
-          <div class="product-item__btn">
-            <a href title="Chi tiết">
-              <i class="fa fa-eye"></i>
-            </a>
-            <a href title="Mua ngay">
-              <i class="fa fa-money-bill-alt"></i>
-            </a>
-            <a href title="Thêm vào giỏ hàng">
-              <i class="fa fa-cart-plus"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- endproduc item -->
-      <!-- product item -->
-      <div class="product-item">
-        <div class="product-item__wrap">
-          <div class="product-item__image">
-            <a href="#" title="#">
-              <img :src="'/images/slides/1572963608.jpeg'" alt="#" />
-            </a>
-          </div>
-          <div class="product-item__des">
-            <span class="product-item__des__name">Hàng abcd</span>
-            <span class="product-item__des__price">120VND</span>
-            <p class="product-item__des__des">
-              hàdh;ahf;ahn;fhna;fn;abna;jfá;jfjná;fjáb
-              nffffffffffffffffffffffffffffffffffffffff
-              fffffffffffffffffffffffffff
-            </p>
-          </div>
-          <div class="product-item__btn">
-            <a href title="Chi tiết">
-              <i class="fa fa-eye"></i>
-            </a>
-            <a href title="Mua ngay">
-              <i class="fa fa-money-bill-alt"></i>
-            </a>
-            <a href title="Thêm vào giỏ hàng">
-              <i class="fa fa-cart-plus"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- endproduc item -->
-      <!-- product item -->
-      <div class="product-item">
-        <div class="product-item__wrap">
-          <div class="product-item__image">
-            <a href="#" title="#">
-              <img :src="'/images/slides/1572963608.jpeg'" alt="#" />
-            </a>
-          </div>
-          <div class="product-item__des">
-            <span class="product-item__des__name">Hàng abcd</span>
-            <span class="product-item__des__price">120VND</span>
-            <p class="product-item__des__des">
-              hàdh;ahf;ahn;fhna;fn;abna;jfá;jfjná;fjáfffffffffffffffffffffff
-              bgfsgsdfffffffffffffffffffffffffffffffffffffffffnffffffffffffff
-              fffffff
-              ffffffffffffffffffffffffffffffffffffffffffffff
-            </p>
-          </div>
-          <div class="product-item__btn">
-            <a href title="Chi tiết">
-              <i class="fa fa-eye"></i>
-            </a>
-            <a href title="Mua ngay">
-              <i class="fa fa-money-bill-alt"></i>
-            </a>
-            <a href title="Thêm vào giỏ hàng">
-              <i class="fa fa-cart-plus"></i>
-            </a>
-          </div>
-        </div>
-      </div>
 
       <!-- endproduc item -->
     </div>
@@ -171,7 +44,16 @@
 export default {
   data() {
     return {
-      productsNew: {}
+      productsNew: {},
+      item: new Form({
+        name: "",
+        id: "",
+        price: "",
+        image: "",
+        color: [],
+        size: "",
+        qty: ""
+      })
     };
   },
   methods: {
@@ -179,11 +61,30 @@ export default {
       axios
         .get("/api/getNewProduct")
         .then(res => {
-          this.productsNew = res.data;
+          this.productsNew = res.data.data;
         })
         .catch(err => {
           console.error(err);
         });
+    },
+    productDetail(proid) {
+      //this.$router.push({ name: "VIewProduct", params: { id: proid } });
+      this.$router.go("/product/" + proid);
+    },
+    addCart(cartpro) {
+      this.item.reset();
+      this.item.name = cartpro.name;
+      this.item.id = cartpro.id;
+      this.item.price = cartpro.price;
+      this.item.sale = cartpro.sale;
+      this.item.qty = 1;
+      this.item.size = cartpro.sizes[0].size;
+      this.item.color.push(cartpro.colors[0].color);
+      this.item.image = cartpro.image;
+      this.$store.commit("addToCart", this.item);
+    },
+    buyNow(cartpro) {
+      this.addCart(cartpro);
     }
   },
   computed: {},
@@ -245,7 +146,8 @@ export default {
       &__image {
         img {
           max-width: 100%;
-          height: auto;
+          max-height: 172px;
+          height: 100% !important;
         }
       }
       &__des {
